@@ -1,0 +1,40 @@
+# Compila el mod en servidores de GitHub (con Java 21) y sube el JAR como descarga.
+# No necesitas tener Java instalado en tu PC: solo subir el repo y descargar el artefacto.
+name: Build JAR
+
+on:
+  workflow_dispatch:  # botón "Run workflow" en la pestaña Actions
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'gradle'
+
+      - name: Hacer gradlew ejecutable
+        run: chmod +x gradlew
+
+      - name: Compilar
+        run: ./gradlew build --no-daemon --stacktrace
+
+      - name: Listar JARs generados
+        run: ls -la build/libs/
+
+      - name: Subir JARs (artefacto descargable)
+        uses: actions/upload-artifact@v4
+        with:
+          name: donutfinder-jar
+          path: build/libs/*.jar
+          if-no-files-found: error
