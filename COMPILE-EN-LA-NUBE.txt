@@ -1,0 +1,34 @@
+Cómo obtener el JAR SIN instalar Java en tu PC
+==============================================
+
+1) Crea una cuenta en https://github.com (gratis).
+
+2) Crea un repositorio NUEVO (público; si es privado también vale si tienes plan).
+
+3) Sube TODA la carpeta "DonutFinder" al repo.
+   Puedes usar "GitHub Desktop" (fácil) o el botón "uploading an existing file".
+
+4) En GitHub, abre el repo -> pestaña "Actions".
+
+5) Si pide "Enable workflows", acepta.
+
+6) Arriba a la izquierda elige "Build JAR" y pulsa "Run workflow" (si no
+   se ejecutó solo al subir). Espera 2-5 minutos.
+
+7) Entra en el workflow que quedó en verde, baja al final: sección
+   "Artifacts" -> "donutfinder-jar" -> descarga el ZIP.
+   Dentro estará el .jar (usa el que NO termine en -dev ni -sources).
+
+Otra forma (tienes Android Studio o IntelliJ IDEA)
+--------------------------------------------------
+1) Abre "Open" y elige la carpeta DonutFinder (como proyecto Gradle).
+2) Deja que descargue dependencias.
+3) Menú Build -> Build Project (o el martillo).
+4) El JAR queda en build\libs\ (igual que con Gradle en consola).
+   El IDE trae un JDK; no hace falta instalarlo a mano.
+
+Problemas
+---------
+- Rojo = fallo de compilación. Abre el job y mira "Compilar" -> copia el error
+  y pide ayuda con ese texto.
+- No ves Actions: el repo no tiene .github/workflows/build.yml (debe subirse la carpeta entera).
